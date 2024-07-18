@@ -1,21 +1,19 @@
 from django.http import HttpResponse
 from django.shortcuts import render
-from . import projectlist
+from .models import Project
 
 def projects(request):
+    projects = Project.objects.all()
     msg = 'Hello You!'
     number = 8
     context = {
         'message' : msg,
         'number' : number,
-        'projects' : projectlist.projectsList
+        'projects' : projects
     }
     return render(request, 'projects/projects.html', context)
 
 def project(request, pk):
-    projectObj = None
-    for i in projectlist.projectsList:
-        if i['id'] == pk:
-            projectObj = i
-    return render(request, 'projects/single-project.html', {'project': projectObj})
+    projectObj = Project.objects.get(id=pk)
+    return render(request, 'projects/single-project.html', {'projectObj': projectObj})
 
