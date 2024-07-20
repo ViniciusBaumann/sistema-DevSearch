@@ -3,7 +3,10 @@
 <main class="formPage my-xl">
     <div class="content-box">
         <div class="formWrapper">
-            <a class="backButton" href="#"><i class="im im-angle-left"></i></a>
+            <a class="backButton" href="{% url 'projects'%}">
+                <i class="im im-angle-left"></i>
+                Voltar
+            </a>
             <br>
 
             <form class="form" method="POST" enctype="multipart/form-data">
@@ -16,7 +19,6 @@
                     {{field}}
                 </div>
                 {% endfor %}
-
 
                 <input class="btn btn--sub btn--lg  my-md" type="submit" value="Submit" />
             </form>
