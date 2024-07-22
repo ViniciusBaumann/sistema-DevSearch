@@ -1,0 +1,10 @@
+{% extends 'main.hmtl' %}
+
+{% block content %}
+    <h1>Create Skill</h1>
+
+    <form method="POST" action="">
+        {% csrf_token %}
+        <input type="submit" value="Sumbit"/>
+    </form>
+{% endblock content %}
