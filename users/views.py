@@ -22,7 +22,8 @@ def loginUser(request):
         try:
             user = User.objects.get(username=username)
         except:
-            messages.error(request, 'Username does not exist')   
+            messages.error(request, 'Username does not exist')
+            return redirect('login')   
 
         user = authenticate(request, username=username, password=password)
 
@@ -60,7 +61,7 @@ def registerUser(request):
 
 def logoutUser(request):
     logout(request)
-    messages.success(request, 'User is logged out')
+    messages.info(request, 'User is logged out')
     return redirect('login')
 
 
