@@ -3,6 +3,6 @@
 # If you are using sqlite3
 *.sqlite3
 # Name of your virtual env
-.vEnv
+.env
 # Ignore compiled Python files
 *.pyc
