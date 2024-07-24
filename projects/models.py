@@ -24,7 +24,11 @@ class Project(models.Model):
 
     def __str__(self):
         return self.title
-
+    class Meta:
+        #Ordem
+        #created = os mais antigos(Ascendente)
+        #-created = os mais recentes(Descrescente)
+        ordering = ['created']
 
 class Review(models.Model):
     VOTE_TYPE = (

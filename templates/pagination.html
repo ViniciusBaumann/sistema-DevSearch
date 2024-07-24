@@ -1,0 +1,36 @@
+<!-- Paginacao -->
+{% if query_set.has_other_pages %}
+<div class="pagination">
+    <ul class="container">
+      
+      <!-- Previous Button -->
+      {% if query_set.has_previous %}
+      <!-- &#10094; is a arrow to the left -->
+      {% if search_query %}
+        <li><a href="?search_query={{ search_query }}&page={{ query_set.previous_page_number }}" class="btn page-link">Back &#10094;</a></li>
+      {% else %}
+        <li><a href="?page={{ query_set.previous_page_number }}" class="btn page-link">Back &#10094;</a></li>
+      {% endif %}
+      {% endif %}
+      {% for page in paginator.page_range %}
+      
+      {% if page == query_set.number %}
+      <!-- Highlight the current page-->
+      <li><a href="?search_query={{search_query}}&page={{queryset.previous_page_number}}" class="btn page-link btn--sub">{{page}}</a></li>
+      {% else %}
+      <!-- All the pages -->
+      <li><a href="?search_query={{search_query}}&page={{page}}" class="btn page-link">{{page}}</a></li>
+      {% endif %}
+      {% endfor %}
+
+      <!-- Next Button -->
+      {% if query_set.has_next %}
+      {% if search_query %}
+        <li><a href="?search_query={{ search_query }}&page={{ query_set.next_page_number }}" class="btn page-link">Next &#10095;</a></li>
+      {% else %}
+        <li><a href="?page={{ query_set.next_page_number }}" class="btn page-link">Next &#10095;</a></li>
+      {% endif %}
+{% endif %}
+    </ul>
+  </div>
+  {% endif %}

@@ -8,7 +8,7 @@ from django.db.models import Q
 
 from .models import Profile
 from .forms import CustomUserCreationForm, ProfileForm, SkillForm
-from .utils import searchProfiles
+from .utils import searchProfiles, paginationProfiles
 # Create your views here.
 
 def loginUser(request):
@@ -69,7 +69,8 @@ def logoutUser(request):
 
 def profiles(request):
     profiles, search_query = searchProfiles(request)
-    context = {'profiles': profiles,'search_query':search_query}
+    profiles, paginator = paginationProfiles(request, profiles, 2)
+    context = {'profiles': profiles,'search_query':search_query,'paginator': paginator}
     return render(request, 'users/profiles.html', context)
 
 def userProfile(request, pk):

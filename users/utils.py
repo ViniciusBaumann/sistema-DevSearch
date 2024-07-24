@@ -1,6 +1,27 @@
 from django.db.models import Q
 from .models import Profile, Skill
 
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+
+def paginationProfiles(request, profiles, results):
+    #Paginacao dos projetos
+    #page = 1 #Pagina
+    page = request.GET.get('page')
+    # results = 2 #Quantidade de Projetos por pagina
+    paginator = Paginator(profiles, results)
+    #Tente pegar a pagina
+    try:
+        profiles = paginator.page(page)
+    #Se o erro for PageNotAnInteger, atribui pagina = 1    
+    except PageNotAnInteger:
+        page = 1
+        profiles = paginator.page(page)
+    #Se o erro for EmptyPage, atribui pagina = numero_paginas (Ultima Pagina)    
+    except EmptyPage:
+        page = paginator.num_pages
+        profiles = paginator.page(page) 
+        
+    return profiles, paginator
 
 def searchProfiles(request):
     search_query = ''

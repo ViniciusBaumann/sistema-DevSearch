@@ -54,6 +54,9 @@
         </div>
       </div>
     </section>
+    <!-- Vai ate a pagination e atribui query_set o objeto de projects-->
+    {% include 'pagination.html' with query_set=projects %}
+ 
   </main>
 
 {% endblock content %}

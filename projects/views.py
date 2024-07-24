@@ -2,13 +2,16 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
-from .utils import searchProject
+
+from .utils import paginationProjects, searchProjects
 from .models import Project, Tag
 from .forms import ProjectForm
 
 def projects(request):
-    projects , search_query = searchProject(request)
-    context = {'projects' : projects, 'search_query':search_query}
+    projects , search_query = searchProjects(request)
+    projects, paginator =  paginationProjects(request, projects, 2)
+    
+    context = {'projects' : projects, 'search_query':search_query, 'paginator': paginator}
     return render(request, 'projects/projects.html', context)
 
 def project(request, pk):
@@ -27,7 +30,7 @@ def createProject(request):
             project = form.save(commit=False)#Cria uma instacia do projeto mas nao envia para a DB
             project.owner = profile #Vincula o dono do projeto ao peril logado atualmente
             project.save()
-            return redirect('projects')
+            return redirect('account')
         
     context = {'form': form}
     return render(request, 'projects/project_form.html', context)
