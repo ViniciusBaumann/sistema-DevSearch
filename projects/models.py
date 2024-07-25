@@ -28,8 +28,25 @@ class Project(models.Model):
         #Ordem
         #created = os mais antigos(Ascendente)
         #-created = os mais recentes(Descrescente)
-        ordering = ['created']
-
+        ordering = ['-vote_ratio', '-vote_total', 'title']
+        
+    def reviewers(self):#lista completa de quem deu review no projeto
+           query_set=self.review_set.all().values_list('owner__id', flat=True)
+           
+        
+    @property
+    def getVoteCount(self):
+        reviews = self.review_set.all()#Pega todas as reviews da DB
+        upVotes = reviews.filter(value='up').count()
+        totalVotes= reviews.count() #Conta a quantidade de votos
+        
+        ratio = (upVotes /totalVotes) * 100 #Calcula o ratio
+        #Atualiza a DB
+        self.vote_total = totalVotes
+        self.vote_ratio = ratio
+        self.save()
+    
+    
 class Review(models.Model):
     VOTE_TYPE = (
         ('up', 'Up Vote'),
@@ -40,9 +57,8 @@ class Review(models.Model):
     body = models.TextField(null=True, blank=True)
     value = models.CharField(max_length=200, choices=VOTE_TYPE)
     created = models.DateTimeField(auto_now_add=True)
-    id = models.UUIDField(default=uuid.uuid4, unique=True,
-                          primary_key=True, editable=False)
-
+    id = models.UUIDField(default=uuid.uuid4, unique=True,primary_key=True, editable=False)
+    #Liga owner e project para evitar que uma pessoa faça inumeros reviews de um unico projeto
     class Meta:
         unique_together = [['owner', 'project']]
 

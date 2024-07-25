@@ -1,6 +1,6 @@
 from django.forms import ModelForm, widgets
 from django import forms
-from .models import Project
+from .models import Project, Review
 
 class ProjectForm(ModelForm):
     class Meta:
@@ -17,3 +17,18 @@ class ProjectForm(ModelForm):
             field.widget.attrs.update({'class':'input'})
 
         # self.fields['title'].widget.attrs.update({'class':'input', 'placeholder': 'Add Title'})
+        
+
+class ReviewForm(ModelForm):
+    class Meta:
+        model = Review
+        fields = ['value', 'body']
+        labels = {
+            'value': 'Place your vote',
+            'body': 'Add a comment!'
+        }
+    def __init__(self, *args, **kwargs):
+        super(ReviewForm, self).__init__(*args, **kwargs)
+        #estilizacao de campo de formulario
+        for name, field in self.fields.items():
+            field.widget.attrs.update({'class':'input'})    
