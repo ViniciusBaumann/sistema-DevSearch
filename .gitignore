@@ -4,5 +4,6 @@
 *.sqlite3
 # Name of your virtual env
 .env
+.env/
 # Ignore compiled Python files
 *.pyc
