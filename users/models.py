@@ -21,7 +21,12 @@ class Profile(models.Model):
 
     def __str__(self):
         return str(self.user.username)
-
+    class Meta:
+        #Ordem
+        #created = os mais antigos(Ascendente)
+        #-created = os mais recentes(Descrescente)
+        ordering = ['-bio','-name']
+        
 class Skill(models.Model):
     owner = models.ForeignKey(Profile, on_delete=models.CASCADE, null=True, blank=True)
     name = models.CharField(max_length=200, blank=True, null=True)
