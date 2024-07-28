@@ -26,7 +26,14 @@ class Profile(models.Model):
         #created = os mais antigos(Ascendente)
         #-created = os mais recentes(Descrescente)
         ordering = ['-bio','-name']
-        
+    @property
+    def imageURL(self):
+        try:
+            url = self.profile_image.url
+        except:
+            url = '/images/profiles/user-default.png'
+
+        return url    
 class Skill(models.Model):
     owner = models.ForeignKey(Profile, on_delete=models.CASCADE, null=True, blank=True)
     name = models.CharField(max_length=200, blank=True, null=True)

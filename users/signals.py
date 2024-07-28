@@ -44,7 +44,7 @@ def deleteUser(sender, instance, **kwargs):
         user = None
     
     if user:
-        # Perform your delete actions here
+        user.delete()
         pass
 
 

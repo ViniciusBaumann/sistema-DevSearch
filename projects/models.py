@@ -30,6 +30,16 @@ class Project(models.Model):
         #-created = os mais recentes(Descrescente)
         ordering = ['-vote_ratio', '-vote_total', 'title']
         
+    @property
+    def imageURL(self):
+        try:
+            url = self.featured_image.url
+        except:
+            url = '/images/default.jpg'
+
+        return url   
+        
+    @property 
     def reviewers(self):#lista completa de quem deu review no projeto
            query_set=self.review_set.all().values_list('owner__id', flat=True)
            
